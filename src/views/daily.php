@@ -9,13 +9,19 @@
  */
 
 /*
- * set timezone to Paris
- */
-date_default_timezone_set('Europe/Paris');
-/*
  * reference to base directory
  */
 $baseDir = dirname(__DIR__, 1);
+
+require($baseDir . '/config.php');
+$config = new Config();
+$myapikey = $config::APIKEY;
+/*
+ * set timezone to Paris
+ */
+date_default_timezone_set('Europe/Paris');
+
+
 require($baseDir . '/views/header.php');
 
 

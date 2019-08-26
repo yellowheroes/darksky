@@ -9,15 +9,20 @@
  */
 
 /*
- * set timezone to Paris
- */
-date_default_timezone_set('Europe/Paris');
-/*
  * reference to base directory
  */
 $baseDir = dirname(__DIR__, 1);
-require($baseDir . '/views/header.php');
 
+require($baseDir . '/config.php');
+$config = new Config();
+$myapikey = $config::APIKEY;
+
+/*
+ * set timezone to Paris
+ */
+date_default_timezone_set('Europe/Paris');
+
+require($baseDir . '/views/header.php');
 
 // get all places on the planet
 // store them in $arr
@@ -66,7 +71,7 @@ if (isset($_POST['submit'])) {
  */
 if(isset($_POST['submit'])) {
     $params = "/?units=si&lang=en";
-    $url = "https://api.darksky.net/forecast/cc2bcd44f8fc3686e76f1657f697335d/" . $lat . "," . $lon . $params;
+    $url = "https://api.darksky.net/forecast/$myapikey/" . $lat . "," . $lon . $params;
 //echo 'api endpoint : ' . $url;
 //echo '<br />';
     echo 'place : ' . $idName;
