@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
  */
 if(isset($_POST['submit'])) {
     $params = "/?units=si&lang=en";
-    $url = "https://api.darksky.net/forecast/cc2bcd44f8fc3686e76f1657f697335d/" . $lat . "," . $lon . $params;
+    $url = "https://api.darksky.net/forecast/$myapikey/" . $lat . "," . $lon . $params;
 //echo 'api endpoint : ' . $url;
 //echo '<br />';
     echo 'Location : ' . $idName;
