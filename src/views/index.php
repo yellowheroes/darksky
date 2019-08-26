@@ -27,7 +27,6 @@ $arr = json_decode($json, true);
 
 // allow user to choose a place(city) and country(code)
 $form = <<<HEREDOC
-<br />
 <form method='POST'>
     <label for "name">name:</label>
     <input type="text" name="name" id="name" required />
@@ -70,7 +69,7 @@ if(isset($_POST['submit'])) {
     $url = "https://api.darksky.net/forecast/$myapikey/" . $lat . "," . $lon . $params;
 //echo 'api endpoint : ' . $url;
 //echo '<br />';
-    echo 'Location : ' . $idName;
+    echo 'place : ' . $idName;
     echo '<br />';
     $json = file_get_contents($url);
     $response = json_decode($json);
@@ -87,7 +86,7 @@ if(isset($_POST['submit'])) {
                 $curPrecipType = $response->currently->precipType;
             }
             $curTemp = round($response->currently->temperature);
-            echo 'Current temperature : ' . $curTemp;
+            echo 'current temperature : ' . $curTemp;
             echo '<br />';
             $curFeelsLike = round($response->currently->apparentTemperature);
             $curHumidity = ($response->currently->humidity) * 100;
@@ -111,7 +110,7 @@ if(isset($_POST['submit'])) {
 
 // daily forecast
     echo "<div class='row'>";
-    echo "<h3 class='ml-15'>7 day Forecast for " . $idName . "(" . $country . ")" . " : <small class='text-info'>" . $dailySummary . "</small></h3>";
+    echo "<h3 class='ml-15'>Week Forecast <small class='text-info'>" . $dailySummary . "</small></h3>";
     echo "</div>"; // end row with 'summary'
 
     $count = 0;
@@ -151,8 +150,6 @@ if(isset($_POST['submit'])) {
         }
         $wTempHigh = round($cond->temperatureMax);
         $wTempLow = round($cond->temperatureMin);
-        $uvIndex = $cond->uvIndex;
-
         $wPrecipProb = $cond->precipProbability * 100;
         if (isset($cond->precipType)) {
             $wPrecipType = $cond->precipType;
@@ -166,7 +163,7 @@ if(isset($_POST['submit'])) {
         $cardCount = 4; // the number of cards to show on each row
         $newRow = $count % $cardCount == 0 ? true : false;
         if ($newRow) {
-            echo "</div><div class='row' style='margin-top: 10px;'>"; // close previous row, open new row
+            echo "</div><div class='row' style='margin-top: 50px;'>"; // close previous row, open new row
         }
         echo '<div class="col-3">';
         echo '<div class="card">';
@@ -178,8 +175,9 @@ if(isset($_POST['submit'])) {
 
         echo '<div class="row" style="margin: 20px;">';
         echo '<div class="col">';
-        echo '<div class="text-success"><span>Max: </span><b>' . $wTempHigh . '</b><i class="wi wi-celsius"></i></div>';
-        echo '<div class="text-info"><span>Min: </span><b>' . $wTempLow . '</b><i class="wi wi-celsius"></i></div>';
+        echo '<div class="text-success"><span>Max: </span><b>' . $wTempHigh . '</b><i class="wi wi-degrees"></i>C</div>';
+        echo '<br />';
+        echo '<div class="text-info"><span>Min: </span><b>' . $wTempLow . '</b><i class="wi wi-degrees"></i>C</div>';
         echo '</div>';
         echo '</div>';
 
@@ -188,8 +186,6 @@ if(isset($_POST['submit'])) {
         echo '<i class="wi wi-umbrella"></i> ' . $wPrecipProb . '% &nbsp;&nbsp; <i class="wi wi-cloudy"></i> ' . $wClouds . '%';
         echo '<br>';
         echo '<small><i class="wi wi-sunrise"></i> ' . date("g:i", $wSunRise) . ' &nbsp; <i class="wi wi-sunset"></i> ' . date("g:i", $wSunSet) . '</small>';
-        echo '<br />';
-        echo '<small><i class="text-warning">UV index : </i> ' . $uvIndex . '</small>';
         echo '</div>';
         echo '</div>';
 
